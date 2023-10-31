@@ -1,0 +1,53 @@
+abstract class Course
+{
+	public void start()
+	{
+		System.out.println("start the Course...");
+	}
+	public abstract double getFee();
+	public abstract void evaluate();
+}
+
+class DACDBDA extends Course
+{
+	private int Fee = 1000000;
+	public void start()
+	{
+		System.out.println("DACDBDA Course starts...");
+	}
+	public double getFee()
+	{
+		return Fee;
+	}
+	public void evaluate()
+	{
+		System.out.println("Evaluating Score for DACDBDA students....");
+	}
+}
+class MSCitCourse extends Course
+{
+	private int Fee = 500000;
+	public double getFee()
+	{
+		return Fee;
+	}
+	public void evaluate()
+	{
+		System.out.println("Evaluating Score for MSCit students....");
+	}
+}
+
+public class Demo
+{
+	static void perform(Course course)
+	{
+		course.start();
+		course.getFee();
+		course.evaluate();
+	}
+	public static void main(String args[])
+	{
+		perform(new DACDBDA());
+		perform(new MSCitCourse());
+	}
+}
