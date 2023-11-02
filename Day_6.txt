@@ -1,0 +1,27 @@
+class parent{
+	parent( int x){
+		System.out.println(x);
+		System.out.println("Default constructor of parent");
+	}
+}
+class child1 extends parent{
+	child1(){
+		super(10);
+		System.out.println("child 1 constructor");
+	}
+}
+
+class child2 extends child1{
+	child2(){
+		System.out.println("child 1 constructor");
+	}
+}
+
+public class Myclass {
+
+	public static void main(String[] args) {
+		
+child2 c2 = new child2();
+	}
+
+}
