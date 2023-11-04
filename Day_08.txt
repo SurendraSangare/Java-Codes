@@ -1,0 +1,44 @@
+abstract class Beverages
+{
+	public void addMilk()
+	{
+		System.out.println(" Milk is added .....");
+	}
+	abstract void addIngredients();
+}
+class Coffee extends Beverages
+{
+	public void addIngredients()
+	{
+		System.out.println(" Ingredients of Coffee are added .....");
+	}
+}
+class Tea extends Beverages
+{
+	public void addIngredients()
+	{
+		System.out.println(" Ingredients of Tea are added ....");
+	}
+}
+class FruitJuice extends Beverages
+{
+	public void addIngredients()
+	{
+		System.out.println(" Ingredients of FruitJuice are added ....");
+	}
+}
+public class Demo
+{
+	public static void main(String args[])
+	{
+		Beverages beverages[] = new Beverages[3];
+		beverages[0] = new Coffee();
+		beverages[1] = new Tea();
+		beverages[2] = new FruitJuice();
+		for(int i=0 ; i<beverages.length; i++)
+		{
+			beverages[i].addMilk();
+			beverages[i].addIngredients();
+		}
+	}
+}
