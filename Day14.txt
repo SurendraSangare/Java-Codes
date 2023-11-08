@@ -1,0 +1,22 @@
+class Base
+{
+	Base()
+	{
+		System.out.println(" Base constructor called");
+	}
+}
+class sub extends Base
+{
+	sub()
+	{
+		System.out.println("Sub constructor called");
+	}
+}
+public class Day4
+{
+	public static void main(String arg[]) {
+		sub m1=new sub();
+		
+	}
+}
+
