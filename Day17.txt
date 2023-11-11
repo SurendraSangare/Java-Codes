@@ -1,0 +1,41 @@
+class Base
+{
+	public void method1()
+	{
+		System.out.println("method of class A");
+	}
+}
+class sub1 extends Base
+{
+	public void method2()
+	{
+	System.out.println("method of class sub1");	
+	}
+}
+class sub2 extends Base
+{
+	public void method3()
+	{
+		System.out.println("method of class sub2");
+	}
+}
+class sub3 extends Base
+{
+	public void method4()
+	{
+		System.out.println("method of class sub3");
+	}
+}
+public class Day4
+{
+	public static void main(String arg[]) {
+		sub1 m1=new sub1();
+		sub2 m2=new sub2();
+		sub3 m3=new sub3();
+		m1.method1();
+		m2.method1();
+		m3.method1();
+		
+	}
+}
+
