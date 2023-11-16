@@ -1,21 +1,39 @@
-class Base
+public class Demo
 {
-	Base()
+     public static void print_prime(int start, int end)//2  10
+    {
+        int i;
+        if(start==2)
+        System.out.println(start);
+        
+         if(is_Odd(start))
+         i=start;
+         else
+         i=start+1;
+        
+        for(;i<=end;i=i+2)
+        {
+            boolean r=is_prime(i);
+            if(r==true)
+            System.out.println(iq);//2 3 5
+        }
+    }
+    public static boolean is_prime(int no)//2 5 6
 	{
-		System.out.println(" Base constructor called");
-	}
-}
-class sub extends Base
-{
-	sub()
-	{
-		System.out.println("Sub constructor called");
-	}
-}
-public class Day4
-{
-	public static void main(String arg[]) {
-		sub m1=new sub();
-		
+	    int n=no/2;
+	    boolean b=true;
+	    for(int i=2;i<=n;i++)
+	    {
+	        if(no%i==0)
+	        { b=false;
+	            return b; 
+	        }
+	    }
+	    return b;
+	} 
+	public static boolean is_Odd(int n)
+	{ 
+	    return  n%2==1
+	    
 	}
 }
