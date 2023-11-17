@@ -1,0 +1,234 @@
+==================== Account.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp9
+{
+    delegate void Deldemo(int id, string name, double amt,double balance);
+    abstract class Account
+    {
+        public event Deldemo SomeEvent;
+        int id;
+        static int getid = 0;
+        string name;
+        double balance;
+
+        static Account()
+        {
+            Console.WriteLine("Welcome to HDFC Bank!");
+        }
+        public Account(string name, double balance)
+        {
+            if (getid >= 5)
+            {
+                throw new Exception("Exception: More than 5 Accounts cannot be created.");
+            }
+            else
+            {
+                id = getid++;
+                Name = name;
+                Balance = balance;
+            }
+
+        }
+        public int Id { get { return id; } }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                int a=value.Length;
+                if ((a <= 2)&& (a >= 15))
+                {
+                    throw new Exception("Exception: Name should be greater than 2 and less than 15");
+                }
+                else
+                {
+                    name = value;
+                }
+            }
+        }
+        public double Balance
+        {
+            get { return balance; }
+            set { balance = value; }
+        }
+        public abstract void withdraw(double amt);
+        public void Deposit(double amt)
+        {
+            Balance += amt;
+        }
+
+
+        public void OnSomeEvent(int id, string name, double amt, double balance)
+        {
+            if(SomeEvent != null)
+            {
+               SomeEvent(id,name, amt, balance);
+            }
+        }
+    }
+}
+
+
+================================== CurrentAccount.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+
+namespace ConsoleApp9
+{
+    internal class CurrentAccount : Account
+    {
+        public CurrentAccount(string name,double balance):base(name,balance) 
+        {
+
+        }
+        public override void withdraw(double amt)
+        {
+            Balance -= amt;
+            OnSomeEvent(Id, Name, amt, Balance);
+        }
+    }
+}
+[8:27 am, 09/11/2023] निलेश शिवलकर: using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp9
+{
+    internal class Message
+    {
+        public void Email(int id, string name, double amt, double balance) 
+        {
+            Console.WriteLine("{0} {1} {2} {3}",id,name,amt,balance);
+
+        }
+
+        public void SMS(int id, string name, double amt, double balance)
+        {
+            Console.WriteLine("{0} {1} {2} {3}", id, name, amt, balance);
+
+        }
+    }
+}
+
+============================ Program.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Channels;
+using System.Threading.Tasks;
+
+namespace ConsoleApp9
+{
+    delegate void del(double  amt, double bal);
+    internal class Program
+    {
+        public static void Main(string[] args)
+        {
+            Message m =new Message();
+            List<Account> acclist = new List<Account>();
+            acclist.Add(new SavingAccount("Prashant", 65000));
+            //acclist.Add(new SavingAccount("Shubham", 60000));
+            //acclist.Add(new CurrentAccount("Shailesh", 55000));
+            //acclist.Add(new CurrentAccount("Patil", 45000));
+            //acclist.Add(new CurrentAccount("Sagar", 50000));
+
+            //SavingAccount.Payinterest((SavingAccount)acclist[0]);
+            //SavingAccount.Display(acclist[1]);
+
+            for(int i=0;i<acclist.Count;i++) 
+            {
+                acclist[i].SomeEvent += m.Email;
+                acclist[i].SomeEvent += m.SMS;
+            }
+
+
+            SavingAccount.Display(acclist[0]);
+
+            double d=SavingAccount.Payinterest(acclist[0]);
+            Console.WriteLine(d);
+            acclist[0].withdraw(15000);
+
+
+
+            //SavingAccount s1 = new SavingAccount("HARSHAL", 6000);
+            //SavingAccount.Display(s1);
+            //double a = SavingAccount.Payinterest(s1);
+            //Console.WriteLine(a);
+
+
+
+
+
+        }
+        
+    }
+}
+
+============================= SavingAccount.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp9
+{
+    internal class SavingAccount:Account
+    {
+        public SavingAccount(string name,double balance):base(name,balance)
+        {
+
+        }
+        const double minbal = 1000;
+       
+        public override void withdraw(double amt)
+        {
+            if(Balance-amt >=minbal) 
+            {
+                Balance -= amt;
+            }
+            else
+            {
+                throw new Exception("Exception:Insufficient Balance");
+            }
+            OnSomeEvent(Id, Name, amt, Balance);
+
+        }
+
+        public static double Payinterest(Account e)
+        {
+            if (e == null)
+            {
+                throw new Exception("Exception: Object should not be NULL");
+            }
+            else
+            {
+                e.Balance = e.Balance + e.Balance * 0.08;
+            }
+            return e.Balance;
+        }
+        
+        public static void Display(Account e)
+        {
+            Console.WriteLine("{0} with {1}",e.Name,e.Balance);
+        }
+
+    }
+}
